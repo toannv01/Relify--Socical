@@ -1,0 +1,38 @@
+<%# <script>
+
+  $(function() {
+    
+  });
+
+  var page = 2;
+  function getUsers() {
+    $.ajax({
+      url: '/users',
+      dataType: 'json',
+      success: function(users) {
+        page++;
+        var html = '';
+        for (var user of users) {
+          html += '<li>';
+          html += '  First name: ' + user.first_name + '<br />';
+          html += '  Last name: ' + user.last_name + '<br />';
+          html += '  Email: ' + user.email + '<br />';
+          html += '</li>';
+        }
+        
+        $("#users-list").append(html);
+      }
+    });
+  }
+  
+  $(window).scroll(function() {
+    if($(window).scrollTop() + $(window).height() == $(document).height()) {
+      getUsers();
+    }
+  });
+
+</script> %>
+
+<ul id="users-list">
+    <% @users %>
+</ul>

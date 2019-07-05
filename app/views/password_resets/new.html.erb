@@ -1,0 +1,35 @@
+
+<div class="container" id="re">
+  <div class="ui form">
+    <div class="form-top">
+      <div class="form-top-left">
+        <h3>Lấy lại mật khẩu</h3>
+          <p>Nhập địa chỉ email để lấy lại mật khẩu:</p>
+      </div>
+      <div class="form-top-right">
+        <i class="lock icon"></i>
+      </div>
+    </div>
+    <div class="form-bottom">
+
+      <% if alert %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>
+
+    <%= form_tag password_resets_path, :method => :post do %>
+      <div class="form-group" data-tooltip="Email là duy nhất và đúng định dạng" data-position="right center">
+        <label class="sr-only" for="form-email">Email</label>
+        <%= label_tag :email %>
+
+        <%= text_field_tag :email, params[:email], class: " invalid form-control", placeholder: "Email", :required =>'required' %>
+      </div>
+      <div class="filed">
+      </div>
+      <div class="actions">
+        <%= submit_tag "Lấy lại mật khẩu",class: " btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+</div>

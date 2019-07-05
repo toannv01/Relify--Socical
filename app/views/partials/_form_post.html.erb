@@ -1,0 +1,20 @@
+<%= form_for @post,  html: {name: "myform", multipart: true}, remote: true do |f| %>
+<div class="btn-post">
+  <div class="form-group">
+  <img src="http://placehold.it/300x300" alt="" class="profile-photo-md" />
+    <%= html_escape f.text_area :context, placeholder: "Bạn đang nghĩ gì ?",
+      size: "72x5", id:"post_status", required: true %>
+  </div>
+    <div class="lb-post">
+      <%= f.fields_for :images do |p| %>
+      <label for="post_images_attributes_0_image"><i class="images icon"></i></label>
+        <%= p.file_field :image, multiple: true, name: "images[image][]", class: "post-image", hidden: 'true' %>
+      <% end %>
+        <label for="post_video"><i class="video icon"></i></label>
+        <%= f.file_field :video, name: "video[]", class: "post-video", hidden: 'true' %>
+      <button class="btn btn-primary " id="create-posts" style="float: right;">Đăng</button>
+      <p id="error"></p>
+    </div>
+
+</div>
+<% end %>

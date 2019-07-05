@@ -1,0 +1,100 @@
+<p id="notice"></p>
+
+      <div class="row">
+
+        <div class="col-md-3 static">
+          <%= render "partials/newsfeed_left" %>
+        </div>
+
+        <div class="col-md-7">
+
+            <h4 style="padding-bottom:10px;"><i class="icon users"></i> Bạn bè</h4>
+            <form class="" action="/search_friends" method="get">
+              <!-- <input class="" type="text" name="q" value="" placeholder="Tìm kiếm" aria-label="Tìm kiếm" >
+              <button class="btn btn-primary" type="submit" name="button">Tìm</button> -->
+
+              <div class="input-group mb-3" style="height:34px !important;">
+                <input style="height:34px !important; border-radius:4px;" type="text" name="q" class="" placeholder="Tìm kiếm" aria-label="Tìm kiếm" aria-describedby="button-addon2">
+
+                <div class="input-group-append">
+                  <button style="background-color:#27aae1;" class="btn btn-outline-secondary" type="submit" name="button"><i class="icon search"></i>Tìm</button>
+                </div>
+              </div>
+
+            </form>
+            <div class="grid-item col-md-4 col-sm-4">
+              <% if @friendships %>
+                <div class="suggestions" id="sticky-sidebar">
+                  <% @users.each do |user| %>
+                    <div class="follow-user">
+                      <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm pull-right-nf" />
+                      <div>
+                        <h6><a href="/users/<%= user.id %>"><%= user.first_name %> <%= user.last_name %></a></h6>
+                          <% if current_user.not_friends_with?(user.id) %>
+                          <i class="text-green icon plus"></i>
+                          <%= link_to "Kết bạn",add_friend_path(user: current_user, friend: user), class: " text-green", method: :post %>
+                          <% else %>
+                          <div class="dropdown"style="margin-left:0px;">
+                            <button class="  dropdown-toggle" style="padding: 0px 6px;font-size: 13px;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon check"></i>  Bạn bè
+                            </button>
+                            <div class="dropdown-menu" style="padding: 0;min-width:0;margin-left:10px;" aria-labelledby="dropdownMenuButton">
+                              <!-- <a class="dropdown-item" href="#">Action</a> -->
+                              <%= link_to 'Hủy kết bạn', friendship_path(user),:method => :delete,:data => { :confirm => "Hủy kết bạn?"},:class => " btn btn-xs  ", :style =>"    color: buttontext;" %>
+                            </div>
+                          </div>
+                          <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+            <% if notice %>
+              <p class="alert alert-success" style="margin-right: 10px;" ><%= notice %></p>
+            <% end %>
+            <div class="line-divider" style="border-top: 1px solid #ccc3c3;margin-bottom: 16px;" ></div>
+            <% if @friendships.size > 0 %>
+            <div class="media" style="display: block ;">
+              <div class="row js-masonry" style=" min-height:700px" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": ".grid-sizer", "percentPosition": true }'>
+                  <div class="grid-item col-md-4 col-sm-4">
+                    <% if @friendships %>
+                      <div class="suggestions" id="sticky-sidebar">
+                        <% @friendships.reverse_each do |friend| %>
+                          <div class="follow-user">
+                            <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm pull-right-nf" />
+                            <div>
+                              <h6><a href="/users/<%= friend.id %>"><%= friend.first_name %> <%= friend.last_name %></a></h6>
+                                <% if current_user.not_friends_with?(friend.id) %>
+                                <i class="text-green icon plus"></i>
+                                  <%= link_to "Kết bạn",add_friend_path(user: current_user, friend: friend), class: " text-green", method: :post %>
+                                <% else %>
+                                <div class="dropdown"style="margin-left:0px;">
+                                  <button class="  dropdown-toggle" style="padding: 0px 6px;font-size: 13px;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <i class="icon check"></i>  Bạn bè
+                                  </button>
+                                  <div class="dropdown-menu" style="padding: 0;min-width:0;margin-left:10px;" aria-labelledby="dropdownMenuButton">
+                                    <!-- <a class="dropdown-item" href="#">Action</a> -->
+                                    <%= link_to 'Hủy kết bạn', friendship_path(friend),:method => :delete,:data => { :confirm => "Hủy kết bạn?"},:class => " btn btn-xs  ", :style =>"    color: buttontext;" %>
+                                  </div>
+                                </div>
+                                <% end %>
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+
+              <!-- end list -->
+              </div>
+            </div>
+            <% else %>
+              <div style='text-align: center;    margin-bottom: 16px;'>Bạn chưa có bạn bè, hãy tìm thêm bạn bè nhé !</div>
+            <% end %>
+            <div class="line-divider" style="border-top: 1px solid #ccc3c3;margin-bottom: 16px;" ></div>
+        </div>
+        <div class="col-md-2 static">
+          <%= render "partials/newsfeed_right" %>
+        </div>
+      </div>

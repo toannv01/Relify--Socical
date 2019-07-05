@@ -1,0 +1,41 @@
+<div class="" id ="header">
+    <nav class="navbar navbar-default navbar-fixed-top menu navbar-expand-lg">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand menu-header" href="/newsfeeds"><img src="/assets/logo.png" alt="logo" /></a>
+        </div>
+        <div class=" navbar-collapse" style="display: inline-block !important; flex-basis: auto;" id="bs-example-navbar-collapse-1" style="float: right!important margin-right: -15px;;">
+          <ul class="nav navbar-nav navbar-right main-menu" style="float: right!important;    margin-right: -15px;">
+          <% if current_user %>
+            <li class="dropdown">
+              <b><a href="/users/<%= current_user.id %>"  role="button" aria-haspopup="true" aria-expanded="false">  <i class="user icon"></i> <%= current_user.first_name %></a></b>
+            </li>
+            <li class="dropdown"><a href="/newsfeeds">Trang chủ</a></li>
+            <li class="dropdown"><a href="/friends">Bạn bè</a></li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon cog"></i></a>
+                <ul class="dropdown-menu newsfeed-home"style="margin-top:14px;">
+                  <li><a href="/users/<%= current_user.id %>/edit">Sửa thông tin</a></li>
+                  <li><%= link_to "Đăng xuất", logout_path, method: :delete ,class:"item"%></li>
+                </ul>
+            </li>
+            <% else %>
+            <li class="dropdown"><a href="/newsfeeds">Giới thiệu</a></li>
+            <li class="dropdown"><a href="/login">Đăng nhập</a></li>
+            <li class="dropdown"><a href="/registration">Đăng kí</a></li>
+            <% end %>
+          </ul>
+          <!-- <ul>
+            <form class="navbar-form navbar-right hidden-sm">
+              <div class="form-group">
+                <i class="icon search"></i>
+                <input type="text" class="form-control" placeholder="   Search">
+              </div>
+            </form>
+          </ul> -->
+        </div><!-- /.navbar-collapse -->
+      </div>
+    </nav>
+</div>

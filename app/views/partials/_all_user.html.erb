@@ -1,0 +1,31 @@
+
+  <div class="suggestions" id="sticky-sidebar">
+    <% @users.each do |user| %>
+      <% if @friendships %>
+
+                <div class="follow-user">
+                  <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm pull-right-nf" />
+                  <div>
+                    <h6><a href="/users/<%= user.id %>"><%= user.first_name %> <%= user.last_name %></a>
+                      <% if current_user.not_friends_with?(friend.id) %>
+                      <i class="text-green icon plus"></i>
+                        <%= link_to "Kết bạn",add_friend_path(user: current_user, friend: friend), class: " text-green", method: :post %>
+                      <% else %>
+                      <div class="dropdown"style="margin-left:0px;">
+                        <button class="  dropdown-toggle" style="padding: 0px 6px;font-size: 13px;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="icon check"></i>  Bạn bè
+                        </button>
+                        <div class="dropdown-menu" style="padding: 0;min-width:0;margin-left:10px;" aria-labelledby="dropdownMenuButton">
+                          <!-- <a class="dropdown-item" href="#">Action</a> -->
+                          <%= link_to 'Hủy kết bạn', friendship_path(friend),:method => :delete,:data => { :confirm => "Hủy kết bạn?"},:class => " btn btn-xs  ", :style =>"    color: buttontext;" %>
+                        </div>
+                      </div>
+                      <% end %>
+                    <%= user.email %>
+                  </div>
+                </div>
+
+
+        <% end %>
+      <% end %>
+  </div>

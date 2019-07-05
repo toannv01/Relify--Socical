@@ -1,0 +1,255 @@
+<script>
+  function escapeHtml(str)
+    {
+      var map =
+      {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      };
+      return str.replace(/[&<>"']/g, function(m) {return map[m];});
+    }
+
+
+
+$(function(){
+
+  var uploadedImages = [];
+  var uploadedVideo = [];
+  var uploading = false;
+  $('#post_images_attributes_0_image').change(function() {
+    document.getElementById("post_video").disabled = true;
+    var fd = new FormData();
+    var files = $('#post_images_attributes_0_image')[0].files;
+    var fsizeimg = $('#post_images_attributes_0_image')[0].files[0].size;
+    var ftypeimg = $('#post_images_attributes_0_image')[0].files[0].type;
+    uploading = true;
+    switch(ftypeimg)
+
+        {
+
+            case 'image/png':
+
+            case 'image/gif':
+
+            case 'image/jpeg':
+
+            case 'image/pjpeg':
+                break;
+
+            default:
+
+                document.getElementById("error").innerHTML = "Định dạng file phải là ảnh"
+
+        }
+     $(".pull-right").css("background-color", "grey")
+    if(fsizeimg>5242880)
+        {
+             document.getElementById("error").innerHTML = "Dung lượng file vượt quá 5MB"
+        }
+    for (let file of files) {
+      fd.append('image', file);
+      $.ajax({
+          url: '/images',
+          type: 'post',
+          data: fd,
+          dataType: 'json',
+          contentType: false,
+          processData: false,
+          success: function(img){
+            uploadedImages.push(img.id);
+            $(".pull-right").css("background-color", "blue")
+          }
+      }).always(function() {
+        if (uploadedImages.length === files.length) {
+          uploading = false;
+        }
+      });
+    }
+  });
+
+  $('#post_video').change(function() {
+    document.getElementById("post_images_attributes_0_image").disabled = true;
+    var fd = new FormData();
+    var files = $('#post_video')[0].files[0];
+    var fsizevid = $('#post_video')[0].files[0].size;
+    var ftypevid = $('#post_video')[0].files[0].type;
+
+    switch(ftypevid)
+
+        {
+
+            case 'video/mp4':
+
+            case 'video/mp3':
+
+            case 'video/flv':
+
+                break;
+
+            default:
+
+                 document.getElementById("error").innerHTML = "Định dạng file phải là video"
+
+        }
+
+        if(fsizevid>209715200)
+        {
+            document.getElementById("error").innerHTML = "Dung lượng file vượt quá 200MB"
+        }
+    fd.append('video', files);
+    $.ajax({
+      url: '/videos',
+      dataType: 'json',
+      type: 'post',
+      data: fd,
+      contentType: false,
+      processData: false,
+      success: function(vid){
+        uploadedVideo.push(vid.id)
+      },
+    });
+  });
+
+  $('#create-posts').click(function(e){
+    e.preventDefault();
+    if (uploading) return;
+
+    var context = $('#post_status').val();
+    var like_count = $('.like').val();
+    var comment_count = $('.comment').val();
+
+    var isError = false;
+
+    escapeHtml(context);
+
+    var images = document.getElementById('post_images_attributes_0_image');
+    if(context == ''){
+      $(".pull-right").css("background-color", "grey")
+      $('#post_status').css({"border-color":"#C00000"});
+      document.getElementById("error").innerHTML = "Bạn chưa nhập nội dung"
+      isError = true;
+    }
+    if(context.length > 1000){
+      $('#errors').text('*Please enter a status less than 1000 words !');
+      $(".pull-right").css("background-color", "grey")
+      document.getElementById("error").innerHTML = "Status của bạn có nhiều hơn 1000 từ"
+      isError = true;
+    }
+
+    $.ajax({
+      url: '/posts',
+      dataType: 'json',
+      type: 'post',
+      data: {
+        context: context,
+        uploadedImages: uploadedImages,
+        uploadedVideo: uploadedVideo
+      },
+      success: function(post){
+        document.getElementById("post_video").disabled = false;
+        document.getElementById("post_images_attributes_0_image").disabled = false;
+        uploadedImages = [];
+        uploadedVideo = [];
+        $('#errors').text('');
+        $('#post_status').css({"border-color":""});
+        var html = '';
+
+        html += '  <div class="post-content box1">';
+        html += '    <div class="box2">';
+        html += '        <div class="post-container">';
+        html += '          <img src="http://placehold.it/300x300" alt="user" class="profile-photo-md pull-left" />';
+        html += '          <div class="row post-detail">';
+        html += '            <div class="col-md-10 user-info">';
+        html += '                <h5><a href="#" class="profile-link">'+post.user.first_name+'</a> <span class="following">Theo dõi</span></h5>';
+        html += '                <p class="text-muted">'+post.post.created_at+'</p>';
+        html += '            </div>';
+        html += '            <div class="col-md-2 reaction">';
+        html += '              <div class="dropdown" style="float:right;">';
+        html += '                <a class="dropbtn">...</a>';
+        html += '                <div class="dropdown-content">';
+        html += '                 <a class="deletePost" data-postid="' + post.post.id + '">Xóa</a>';
+        html += '                </div>';
+        html += '              </div>';
+        html += '            </div>';
+        html += '          </div>';
+        html += '          <div class="post-text">';
+        html += '            <p>'+post.post.context+' <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>';
+        html += '          </div>';
+        html += '        </div>';
+          if(post.image != 'null'){
+                $.each(post.image, function(index, imgItem) {
+                  if(imgItem.image.thumb.url){
+                  html += '      <img src="' + imgItem.image.url + '" class="img-responsive post-image") />';
+                  }
+                });
+            }
+            if(post.video != 'null'){
+                $.each(post.video, function(index, vidItem) {
+                  if(vidItem.video.url){
+                  html += '      <video class="post-video" controls> <source src="'+ vidItem.video.url +'" type="video/mp4"> </video> ';
+                  }
+                });
+            }
+        html += '        <div class="line-divider" ></div>';
+        html += '        <div class="row">';
+        html += '          <div class="col-md-2 reaction">';
+        html += '              <a href="#" class="btn text-like">'+post.post.like_count+' <i class="icon heart"></i>Thích</a>';
+        html += '          </div>';
+        html += '          <div class="col-md-6">';
+        html += '          </div>';
+        html += '          <div class="col-md-2 reaction">';
+        html += '              <a href="#" class="btn text-black">'+post.post.comments_count+' <i class="icon comment"></i>Bình luận</a>';
+        html += '          </div>';
+        html += '        </div>';
+        html += '        <div class="line-divider" style="margin-top: 4px;"></div>';
+        html += '        <a  class="addloadcomment" style="padding-left: 8px;" >Tải thêm bình luận</a>';
+        html += '    </div> ';
+        html += '    <div class="box3">   ';
+        html += '      <div class="post-container">';
+        html += '        <div class="row">';
+        html += '          <div class="col-md-1.5"  style="margin-left: 12px;margin-right: 5px">';
+        html += '            <img src="http://placehold.it/300x300" alt="user" class="profile-photo-sm pull-left" />';
+        html += '          </div>';
+        html += '          <div class="col-md-10" style="padding-left: 0px;padding-top: 15px;">';
+
+        html += '            <textarea type="texts" cols="5" rows="1" class="form-control" placeholder="Viết bình luận" style="line-height: 15px; border-radius: 10px"></textarea>';
+        html += '            <button type="button" name="button" class="btn btn-primary" style=" float: right; margin-top:5px;">Đăng</button>';
+        html += '         </div>';
+        html += '        </div>';
+        html += '      </div>';
+
+        html += '    </div>  ';
+        html += '  </div>';
+
+              $('.box0').prepend(html);
+              $('#post_status').val('');
+              $('.post-image').val('')
+              $('.post-video').val('');
+              document.getElementById("error").innerHTML = "";
+          }
+    });
+  });
+
+
+
+})
+</script>
+
+<p id="notice"><%= notice %></p>
+  <div class="row">
+      <div class="col-md-3 static">
+        <%= render "partials/newsfeed_left" %>
+      </div>
+      <div class="col-md-7">
+        <div class="create-post">
+            <%= render "partials/form_post" %>
+        </div>
+        <%= render "posts/post" %>
+      </div>
+      <div class="col-md-2 static">
+        <%= render "partials/newsfeed_right" %>
+      </div>
+  </div>

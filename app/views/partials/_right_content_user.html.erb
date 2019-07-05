@@ -1,0 +1,34 @@
+<div class="col-md-2 static"  style="padding-top:15px;">
+  <%= form_for @user do |f| %>
+
+    <!--Sticky Timeline Activity Sidebar-->
+    <div id="sticky-sidebar">
+      <b><h6 class="grey"><%= @user.first_name %> hoạt động</h6></b>
+      <div class="feed-item">
+        <div class="live-activity">
+          <p><a href="#" class="profile-link"><%= @user.first_name %></a> Bình luận vào 1 ảnh</p>
+          <p class="text-muted">5 vừa xong</p>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="live-activity">
+          <p><a href="#" class="profile-link"><%= @user.first_name %></a> Đăng 1 ảnh</p>
+          <p class="text-muted">1 giờ trước</p>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="live-activity">
+          <p><a href="#" class="profile-link"><%= @user.first_name %></a> thích một bài đăng</p>
+          <p class="text-muted">4 giờ trước</p>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="live-activity">
+          <p><a href="#" class="profile-link"><%= @user.first_name %></a> chia sẻ 1 album</p>
+          <p class="text-muted">1 ngày trước</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+</div>

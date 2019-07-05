@@ -1,0 +1,138 @@
+<script>
+$(function() {
+        getImages();
+
+  });
+   function getImages() {
+    $.ajax({
+      type: "get",
+      url: '/images',
+      dataType: 'json',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Optional
+        'Content-Type': 'application/json'
+      },
+      success: function(images) {
+        var html = '';
+
+        for (var image of images.image) {
+            html += ' <div class="grid-item col-md-6 col-sm-6">';
+            html += '   <div class="media-grid">';
+            html += '     <div class="img-wrapper" data-toggle="modal" data-target=".modal-'+image.id+'">';
+            html += '       <img src="'+image.image.thumb.url+'" alt="" class="img-responsive post-image" data-imgid="' + image.id + '" data-ableid="'+image.image_able_id+'"/>';
+            html += '     </div>';
+            html += '     <div class="modal fade modal-'+image.id+'" tabindex="-1" role="dialog" aria-hidden="true">';
+            html += '       <div class="modal-dialog modal-lg">';
+            html += '         <div class="modal-content">';
+            html += '         </div>';
+            html += '       </div>';
+            html += '     </div>';
+            html += '   </div>';
+            html += ' </div>';
+        }
+        $('.js-masonry').append(html);
+          $('.img-wrapper').bind('click',function(){
+            var img_id = $(this).find('.post-image').data('imgid');
+            var image_able_id = $(this).find('.post-image').data('ableid');
+            $.ajax({
+                        type: "get",
+                        url: '/images/'+img_id,
+                        dataType: 'json',
+                        headers: {
+                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Optional
+                          'Content-Type': 'application/json'
+                        },
+                        success: function(imgpost) {
+                          console.log(imgpost.post.id);
+
+                          var html1 = '';
+                          if(imgpost.post.id == image_able_id){
+                          html1 += '           <div class="post-content box1">';
+                          html1 += '             <div class="box2">';
+                          html1 += '               <div class="post-container">';
+                          html1 += '                 <img src="http://placehold.it/300x300" alt="user" class="profile-photo-md pull-left" />';
+                          html1 += '                 <div class="row post-detail">';
+                          html1 += '                   <div class="col-md-10 user-info">';
+                          html1 += '                     <h5><a href="#" class="profile-link">'+imgpost.user.first_name+'</a> <span class="following">Theo dõi</span></h5>';
+                          html1 += '                     <p class="text-muted">Đăng vào 3 phút trước</p>';
+                          html1 += '                   </div>';
+                          html1 += '                   <div class="col-md-2 reaction">';
+                          html1 += '                     <div class="dropdown" style="float:right;">';
+                          html1 += '                       <a class="dropbtn">...</a>';
+                          html1 += '                       <div class="dropdown-content">';
+                          html1 += '                        <a class="deletePost" data-postid="' + imgpost.post.id + '">Delete</a>';
+                          html1 += '                       </div>';
+                          html1 += '                     </div>';
+                          html1 += '                   </div>';
+                          html1 += '                 </div>';
+                          html1 += '                 <div class="post-text">';
+                          html1 += '                   <p>'+imgpost.post.context+' <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>';
+                          html1 += '                 </div>';
+                          html1 += '               </div>';
+                          html1 += '               <img src="' + imgpost.image.image.url + '" class="img-responsive post-image1") />';
+                          // html1 += '               <div class="line-divider" ></div>';
+                          html1 += '               <div class="row">';
+                          html1 += '               <div class="line-divider" style="margin-top: 4px;"></div>';
+
+                          html1 += '                 <div class="col-md-2 reaction">';
+                          html1 += '                   <a href="#" class="btn text-like">'+imgpost.post.like_count+' <i class="icon heart"></i>Like</a>';
+                          html1 += '                 </div>';
+                          html1 += '                 <div class="col-md-6">';
+                          html1 += '                 </div>';
+                          html1 += '                 <div class="col-md-2 reaction">';
+                          html1 += '                   <a href="#" class="btn text-black">'+imgpost.post.comments_count+' <i class="icon comment"></i>Comment</a>';
+                          html1 += '                 </div>';
+                          html1 += '               </div>';
+                          // html1 += '               <div class="line-divider" style="margin-top: 4px;"></div>';
+                          // html1 += '               <a  class="addloadcomment" style="padding-left: 8px;" >Load more comment</a>';
+                          html1 += '             </div> ';
+                          // html1 += '             <div class="box3">   ';
+                          // html1 += '               <div class="row comment-box post-container">';
+                          // html1 += '                 <div class="col-md-1.5 comment-avatar">';
+                          // html1 += '                   <img src="http://placehold.it/300x300" alt="user" class="profile-photo-sm pull-left" />';
+                          // html1 += '                 </div>';
+                          // html1 += '                 <div class="col-md-10 comment-content">';
+                          // html1 += '                   <div class="post-comment">';
+                          // html1 += '                     <div class="dropdown" style="float:right;">';
+                          // html1 += '                       <a class="dropbtn">...</a>';
+                          // html1 += '                       <div class="dropdown-content">';
+                          // html1 += '                         <a href="#">Sửa</a>';
+                          // html1 += '                         <a href="#">Delete</a>';
+                          // html1 += '                       </div>';
+                          // html1 += '                     </div>';
+                          // html1 += '                     <a href=""class="profile-link"><h5>John</h5></a><p style= "padding-right: 4px;">comment 1 1223213Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad mi <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>';
+                          // html1 += '                   </div>';
+                          // html1 += '                 </div>';
+                          // html1 += '               </div>';
+                          // html1 += '               <div class="post-container">';
+                          // html1 += '                 <div class="row">';
+                          // html1 += '                   <div class="col-md-1.5"  style="margin-left: 12px;margin-right: 5px">';
+                          // html1 += '                     <img src="http://placehold.it/300x300" alt="user" class="profile-photo-sm pull-left" />';
+                          // html1 += '                   </div>';
+                          // html1 += '                   <div class="col-md-10" style="padding-left: 0px;padding-top: 15px;">';
+                          // html1 += '                     <textarea type="texts" cols="5" rows="1" class="form-control" placeholder="Post a comment" style="line-height: 15px; border-radius: 10px"></textarea>';
+                          // html1 += '                     <button type="button" name="button" class="btn btn-primary" style="float: right; margin-top:5px;">Sent</button>';
+                          // html1 += '                   </div>';
+                          // html1 += '                 </div>';
+                          // html1 += '               </div>';
+                          html1 += '             </div>  ';
+                          html1 += '           </div>';
+                          $('.modal-content').html(html1);
+                          }
+                        }
+                        })
+          });
+      }
+    })
+  }
+</script>
+
+  <div class="col-md-7 images_show">
+    <h4 style="padding-bottom:10px;"><i class="icon images"></i>Images</h4>
+    <div class="line-divider" style="border-top: 1px solid #ccc3c3;margin-bottom: 16px;" ></div>
+    <div class="media">
+      <div class="row js-masonry" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": ".grid-sizer", "percentPosition": true }'>
+      </div>
+    </div>
+    <div class="line-divider" style="border-top: 1px solid #ccc3c3;margin-bottom: 16px;" ></div>
+  </div>

@@ -1,0 +1,358 @@
+<script>
+
+
+function escapeHtml(str)
+    {
+      var map =
+      {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;',
+      };
+      return str.replace(/[&<>"']/g, function(m) {return map[m];});
+    }
+
+  $(function() {
+
+
+        getPosts();
+
+
+    //  getPosts();
+  });
+
+
+  function getPosts() {
+
+    $.ajax({
+      type: "get",
+      url: '/posts',
+      dataType: 'json',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Optional
+        'Content-Type': 'application/json'
+      },
+      success: function(posts) {
+
+        var html = '';
+        for (var post of posts) {
+          //  console.log(post);
+
+          html += '  <div class="post-content box1">';
+          html += '    <div class="box2">';
+          html += '        <div class="post-container">';
+          html += '          <img src="http://placehold.it/300x300" alt="user" class="profile-photo-md pull-left" />';
+          html += '          <div class="row post-detail">';
+          html += '            <div class="col-md-10 user-info">';
+          html += '                <h5><a href="#" class="profile-link">'+ post.username +'</a> <span class="following">Theo dõi</span></h5>';
+          html += '                <p class="text-muted">'+ post.created_at+'</p>';
+          html += '            </div>';
+          html += '            <div class="col-md-2 reaction">';
+          html += '              <div class="dropdown" style="float:right;padding-right: 15px;">';
+          html += '                <a class="dropbtn">...</a>';
+          html += '                <div class="dropdown-content">';
+          html += '                <a class="deletePost" data-postid="' + post.id + '">Xóa bài</a>';
+          html += '                </div>';
+          html += '              </div>';
+          html += '            </div>';
+          html += '          </div>';
+          html += '          <div class="post-text">';
+          html += '            <p>'+post.context+' <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>';
+          html += '          </div>';
+          html += '        </div>';
+          if(post.images != 'null')
+              $.each(post.images, function(index, imgItem) {
+                if(imgItem.image.thumb.url)
+                html += '      <img src="' + imgItem.image.url + '" class="img-responsive post-image") />';
+          });
+          if(post.video != 'null')
+              $.each(post.video, function(index, vidItem) {
+                if(vidItem.video.url)
+                html += '      <video class="post-video" controls> <source src="'+ vidItem.video.url +'" type="video/mp4"> </video> ';
+          });
+          html += '        <div class="line-divider" ></div>';
+          html += '        <div class="row">';
+          html += '          <div class="col-md-2 reaction">';
+          html += '              <a href="#" class="btn text-like">'+post.like_count+' <i class="icon heart"></i>Thích</a>';
+          html += '          </div>';
+          html += '          <div class="col-md-6">';
+          html += '          </div>';
+          html += '          <div class="col-md-2 reaction">';
+          html += '              <a href="#" class="btn text-black">'+post.comments_count+' <i class="icon comment"></i>Bình luận</a>';
+          html += '          </div>';
+          html += '        </div>';
+          html += '        <div class="line-divider" style="margin-top: 4px;"></div>';
+          html += '        <a data-loadcomment-id="'+post.id+'" class="addloadcomment" style="padding-left: 8px;color:green" >Tải thêm bình luận</a>';
+          html += '    </div> ';
+          html += '    <div class="box3">   ';
+            for(var comment of post.comments){
+              html += '      <div class="row comment-box post-container">';
+              html += '        <div class="col-md-1.5 comment-avatar">';
+              html += '          <img src="http://placehold.it/300x300" alt="user" class="profile-photo-sm pull-left" />';
+              html += '        </div>';
+              html += '        <div class="col-md-10 comment-content">';
+              html += '          <div class="post-comment">';
+              html += '            <div class="dropdown" style="float:right;">';
+              html += '              <a class="dropbtn">...</a>';
+              html += '              <div class="dropdown-content">';
+              html += '                <a data-commentid="' + comment.id + '" class="upComment-sumit" >Update</a>';
+              html += '                <a data-comment-id="' + comment.id + '" class="deComment-sumit" >Delete</a>';
+              html += '              </div>';
+              html += '            </div>';
+              html += '            <a href=""class="profile-link"><h5>'+comment.usercomment+'</h5></a><p style= "padding-right: 4px;">'+comment.content+' <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>';
+
+              html += '          </div>';
+              html += '        </div>';
+              html += '      </div>';
+           }
+          html += '      <div class="post-container">';
+          html += '        <div class="row">';
+          html += '          <div class="col-md-1.5"  style="margin-left: 12px;margin-right: 5px">';
+          html += '            <img src="http://placehold.it/300x300" alt="user" class="profile-photo-sm pull-left" />';
+          html += '          </div>';
+          html += '          <div class="col-md-10" style="padding-left: 0px;padding-top: 15px;">';
+          html += '            <textarea type="texts" cols="5" rows="1" class="form-control content" placeholder="Viết bình luận" style="line-height: 15px; border-radius: 10px"></textarea>';
+          html += '            <button data-post-id="' + post.id + '"  type="button" name="button" class="btn btn-primary" style="float: right; margin-top:5px;">Gửi</button>';
+          html += '         </div>';
+          html += '        </div>';
+          html += '      </div>';
+
+          html += '    </div>  ';
+          html += '  </div>';
+        }
+
+      $('.box0').append(html);
+      }
+    })
+
+   $('.box0').delegate('.deletePost','click',function(){
+      var div =$(this);
+      var parent = div.parents('.box1');
+      var post_id = div.data('postid');
+       $.ajax({
+            type: "delete",
+            url: "/posts/"+post_id,
+            dataType: "json",
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Optional
+              'Content-Type': 'application/json'
+            },
+            success: function(mess){
+              parent.remove();
+            },
+              error:  function(error){
+                  console.log(error);
+              }
+          });
+
+
+
+   })
+
+    var commentFetching = false;
+    var page = 2;
+    var limit = 2;
+    $('.box0').delegate('.addloadcomment','click',function(){
+
+      var div =$(this);
+      var parent = div.parents('.box1');
+      var post_id = div.data('loadcomment-id');
+      var commentable_type = 'Post';
+
+      if (commentFetching) return;
+      page++;
+      if (!page){
+      page =1;
+      }
+      commentFetching = true;
+      console.log('post_id --> ', post_id);
+      $.ajax({
+          type: "get",
+          url: "/comments?commentable_id="+post_id+ "&commentable_type="+commentable_type+"&page="+ page,
+          dataType: "json",
+          headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Optional
+          'Content-Type': 'application/json'
+          },
+          success: function(load_comments){
+          if(load_comments.length===0){
+              parent.find('.addloadcomment').fadeOut();
+          }
+          // if(load_comments.length >0){
+
+            var html = '';
+            for(var load_comment of load_comments){
+            console.log(load_comment);
+              html += '      <div class="row comment-box post-container">';
+              html += '        <div class="col-md-1.5 comment-avatar">';
+              html += '          <img src="http://placehold.it/300x300" alt="user" class="profile-photo-sm pull-left" />';
+              html += '        </div>';
+              html += '        <div class="col-md-10 comment-content">';
+              html += '          <div class="post-comment">';
+              html += '            <div class="dropdown" style="float:right;">';
+              html += '              <a class="dropbtn">...</a>';
+              html += '              <div class="dropdown-content">';
+              html += '                <a data-commentid="' + load_comment.id + '" class="upComment-sumit" >Update</a>';
+              html += '                <a  data-comment-id="' + load_comment.id + '" class="deComment-sumit">Delete</a>';
+              html += '              </div>';
+              html += '            </div>';
+              html += '            <a href=""class="profile-link"><h5>'+load_comment.name+'</h5></a><p style= "padding-right: 4px;">'+load_comment.content+' <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>';
+
+              html += '          </div>';
+              html += '        </div>';
+              html += '      </div>';
+            }
+            parent.find('.box2').append(html);
+            commentFetching = false;
+          // }else{
+          //   parent.find('.addloadcomment').hide();
+          //   console.log("mang nay khong co")
+          // }
+
+          },
+          error:  function(error){
+          }
+        });
+
+        // page = page+1;
+      })
+      $('.box0').delegate('.btn-primary', 'click', function() {
+          var button = $(this);
+          var parent = button.parents('.box1');
+          var post_id = button.data('post-id');
+          var content = parent.find('.content').val();
+
+          console.log('post_id --> ', post_id);
+          console.log('content --> ', content);
+          var commentable_id = post_id;
+          var commentable_type = 'Post';
+          var content = escapeHtml(content);
+
+          $.ajax({
+            type: "post",
+              url: "/comments",
+              dataType: "json",
+              headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'Content-Type': 'application/json'
+              },
+              data: JSON.stringify({
+                commentable_id: commentable_id,
+                commentable_type: commentable_type,
+                content: content
+
+              }),
+              success: function(comment){
+                  html='';
+
+                  html += '      <div class="row comment-box post-container">';
+                  html += '        <div class="col-md-1.5 comment-avatar">';
+                  html += '          <img src="http://placehold.it/300x300" alt="user" class="profile-photo-sm pull-left" />';
+                  html += '        </div>';
+                  html += '        <div class="col-md-10 comment-content">';
+                  html += '          <div class="post-comment">';
+                  html += '            <div class="dropdown" style="float:right;">';
+                  html += '              <a class="dropbtn">...</a>';
+                  html += '              <div class="dropdown-content">';
+                  html += '                <a data-commentid="' + comment.comment.id + '" class="upComment-sumit" >Update</a>';
+                  html += '                <a data-comment-id="' + comment.comment.id + '" class="deComment-sumit">Delete</a>';
+                  html += '              </div>';
+                  html += '            </div>';
+                  html += '            <a href=""class="profile-link"><h5>'+comment.name.first_name+'</h5></a><p style= "padding-right: 4px;">'+comment.comment.content+' <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>';
+                  html += '          </div>';
+                  html += '        </div>';
+                  html += '      </div>';
+                parent.find('.box2').append(html);
+                parent.find('.content').val('');
+              },
+              error:  function(error){
+                console.log(error);
+              }
+          });
+        });
+
+        $('.box0').delegate('.deComment-sumit','click',function(){
+          var div =$(this);
+          var parent = div.parents('.box0');
+          var comment_id = div.data('comment-id');
+          console.log('comment_id --> ', comment_id);
+
+          $.ajax({
+            type: "delete",
+            url: "/comments/"+comment_id,
+            dataType: "json",
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Optional
+              'Content-Type': 'application/json'
+            },
+            success: function(data){
+             // parent.remove();
+             location.reload();
+            },
+              error:  function(error){
+
+              }
+          });
+      })
+
+       $('.box0').delegate('.upComment-sumit','click',function(){
+        var div =$(this);
+        var parent = div.parents('.box1');
+        var comment_id = div.data('commentid');
+        var content = parent.find('.content').val();
+        console.log('comment_id --> ', comment_id);
+        console.log('content --> ', content);
+         parent.find('.bntupdate').css({"display":"block"});
+        $.ajax({
+        type: "put",
+          url: "/comments/"+comment_id,
+          dataType: "json",
+          headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Optional
+          'Content-Type': 'application/json'
+          },
+          data: JSON.stringify({
+            id: comment_id,
+            content: content
+
+          }),
+          success: function(data){
+             <%# html='';
+
+                  html += '      <div class="row comment-box post-container">';
+                  html += '        <div class="col-md-1.5 comment-avatar">';
+                  html += '          <img src="http://placehold.it/300x300" alt="user" class="profile-photo-sm pull-left" />';
+                  html += '        </div>';
+                  html += '        <div class="col-md-10 comment-content">';
+                  html += '          <div class="post-comment">';
+                  html += '            <div class="dropdown" style="float:right;">';
+                  html += '              <a class="dropbtn">...</a>';
+                  html += '              <div class="dropdown-content">';
+                  html += '                <a data-commentid="' + data.comment.id + '" class="upComment-sumit" >Update</a>';
+                  html += '                <a data-comment-id="' + data.comment.id + '" class="deComment-sumit">Delete</a>';
+                  html += '              </div>';
+                  html += '            </div>';
+                  html += '            <a href=""class="profile-link"><h5>'+data.name.first_name+'</h5></a><p style= "padding-right: 4px;" class="comment">'+data.comment.content+' <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>';
+                  html += '          </div>';
+                  html += '        </div>';
+                  html += '      </div>';
+
+                  div.find('.post-comment').html(html);
+                  parent.find('.content').val(''); %>
+                  location.reload();
+          },
+          error:  function(error){
+            console.log(error);
+          }
+      });
+      })
+
+  }
+
+</script>
+
+<div class="box0">
+
+</div>

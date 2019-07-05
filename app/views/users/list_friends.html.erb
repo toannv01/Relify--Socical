@@ -1,0 +1,75 @@
+<p id="notice"><%= notice %></p>
+<div class="row">
+
+  <div class="col-md-3 static">
+    <%= render "partials/newsfeed_left" %>
+  </div>
+
+  <div class="col-md-7">
+
+      <h4 style="padding-bottom:10px;"><i class="icon images"></i>Images</h4>
+      <div class="line-divider" style="border-top: 1px solid #ccc3c3;margin-bottom: 16px;" ></div>
+      <div class="media">
+        <div class="row js-masonry" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": ".grid-sizer", "percentPosition": true }'>
+
+          <div class="grid-item col-md-6 col-sm-6">
+            <div class="media-grid">
+              <div class="img-wrapper" data-toggle="modal" data-target=".modal-3">
+                <img src="http://placehold.it/1280x1000" alt="" class="img-responsive post-image" />
+              </div>
+              <div class="media-info">
+                <div class="reaction">
+                  <a href="#" class="btn text-like"><i class="icon heart"></i> 416</a>
+                  <a href="#" class="btn text-black"><i class="icon comment"></i> 31</a>
+                </div>
+
+              </div>
+
+              <!--Popup-->
+              <div class="modal fade modal-3" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <%= render "partials/post_2" %>
+
+                  </div>
+                </div>
+              </div><!--Popup End-->
+
+            </div>
+          </div>
+
+          <div class="grid-item col-md-6 col-sm-6">
+            <div class="media-grid">
+              <div class="img-wrapper" data-toggle="modal" data-target=".modal-4">
+                <img src="http://placehold.it/1280x1000" alt="" class="img-responsive post-image" />
+              </div>
+              <div class="media-info">
+                <div class="reaction">
+                  <a href="#" class="btn text-like"><i class="icon heart"></i> 416</a>
+                  <a href="#" class="btn text-black"><i class="icon comment"></i> 31</a>
+                </div>
+
+              </div>
+
+              <!--Popup-->
+              <div class="modal fade modal-4" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <%= render "partials/post_2" %>
+
+                  </div>
+                </div>
+              </div><!--Popup End-->
+
+            </div>
+          </div>
+
+        <!-- end list video -->
+        </div>
+      </div>
+      <div class="line-divider" style="border-top: 1px solid #ccc3c3;margin-bottom: 16px;" ></div>
+
+
+  </div>
+    <%= render "partials/newsfeed_right" %>
+</div>

@@ -1,0 +1,61 @@
+<div class="" id="page-contents">
+<p id="notice"><%= notice %></p>
+    <div class="container">
+      <div class="row">
+
+        <!-- Newsfeed Common Side Bar Left
+        ================================================= -->
+        <div class="col-md-3 static">
+          <%= render "partials/newsfeed_left" %>
+        </div>
+        <!-- END Newsfeed Common Side Bar Left
+        ================================================= -->
+
+
+        <!-- Newsfeed Contents
+        ================================================= -->
+        <div class="col-md-7">
+
+          <!-- Post Create Box
+          ================================================= -->
+          <div class="create-post">
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                  <img src="http://placehold.it/300x300" alt="" class="profile-photo-md" />
+                  <textarea name="texts" id="exampleTextarea" cols="50" rows="5" class="form-control" placeholder="Write what you wish"></textarea>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12">
+                <div class="tools">
+                  <ul class="publishing-tools list-inline">
+                    <li><a href="#"><i class="icon images"></i></a></li>
+                    <li><a href="#"><i class="icon video"></i></a></li>
+                  </ul>
+                  <button class="btn-primary pull-right btn">Publish</button>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12">
+            <div class="tools">
+              <ul class="publishing-tools list-inline">
+                <li><a href="#"><i class="icon images"></i></a></li>
+                <li><a href="#"><i class="icon video"></i></a></li>
+              </ul>
+              <button class="btn-primary pull-right btn">Publish</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- Post Create Box End-->
+    <!-- Newsfeed Contents
+    ================================================= -->
+      <%= render "partials/post_1" %>
+      <%= render "partials/post_2" %>
+      <%= render "partials/post_3" %>
+    <!-- END Newsfeed Contents
+    ================================================= -->
+    </div>
+    <div class="col-md-2">
+
+    </div>
+</div>

@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="timeline">
+    <div id="page-contents">
+      <div class="row">
+        <%= render "partials/edit_user_left" %>
+        <div class="col-md-8">
+          <!-- Basic Information
+          ================================================= -->
+          <div class="edit-profile-container">
+            <div class="block-title">
+              <h4 class="grey"><i class="icon checkmark"></i>Chỉnh sửa thông tin</h4>
+              <!-- <div class="line"></div>
+              <p>hello </p>
+              <div class="line"></div> -->
+            </div>
+            <div class="edit-block">
+              <%= form_for @user do |f| %>
+                  <% if notice %>
+                    <p class="alert alert-success"><%= notice %></p>
+                  <% end %>
+                  <% if alert %>
+                    <p class="alert alert-danger"><%= alert %></p>
+                  <% end %>
+                <div class="row">
+                  <div class="form-group col-md-6" data-tooltip="Tên không được để trống hoặc dài quá 32 kí tự" data-position="bottom center">
+                    <label for="edit-first-name">Tên</label>
+                    <%= f.text_field :first_name , placeholder: "Nhập tên của bạn",class: "form-control input-group-lg" , id: 'edit-first-name',  :required =>'required', :maxlength => 32 , :pattern => "[A-Za-z\s]{2,}"%>
+                  </div>
+                  <div class="form-group col-md-6" data-tooltip="Họ & tên đệm không được để trống hoặc dài quá 32 kí tự" data-position="bottom center">
+                    <label for="edit-last-name" class="">Họ & tên đệm</label>
+                    <%= f.text_field :last_name , placeholder: "Enter Last name",class: "form-control input-group-lg" , id: 'edit-last-name',  :required =>'required', :maxlength => 32 , :pattern => "[A-Za-z\s]{2,}"%>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label for="email">Email</label>
+                    <%= f.email_field :email, class: "form-control input-group-lg", placeholder: "Enter Email", :required =>'required', :disabled =>'true' %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="birth">Ngày sinh</label>
+                    <%=  f.date_field :birth ,class: "form-control input-group-lg" ,:required =>'required'  %>
+                  </div>
+                  <div class="form-group gender col-md-6" style=" text-align: ; padding-top :30px;" >
+                      <span><strong>Giới tính: </strong></span>
+                      <%= f.radio_button :sex, '0',class:"button-radio", :checked => true %> <span style="padding-left:5px;">Nam</span>
+                      <%= f.radio_button :sex, '1' ,class:"button-radio", :checked => false %> <span style="padding-left:5px;">Nữ</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="city"> Thành phố</label>
+                    <%= f.text_field :city ,class: "form-control input-group-lg", placeholder: "Enter City"  %>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="country">Quốc gia</label>
+                    <%= f.text_field :country ,class: "form-control input-group-lg", placeholder: "Enter Country"%>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <label for="my-info">Mô tả</label>
+                    <%= f.text_area :introduction ,class: "form-control", placeholder: "Nhập mô tả về bản thân", :maxlength => "500",:cols=>"400",:rows=>"4",:pattern => "[A-Za-z\s]{1,}"  %>
+                  </div>
+                </div>
+                  <div class=" col-md-2">
+                    <%= f.submit "Lưu" , class: 'btn btn-primary' %>
+                  </div>
+                </div>
+              <!-- </form> -->
+            <% end %>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-1 static"> -->
+          <!--Sticky Timeline Activity Sidebar-->
+          <!-- <div id="sticky-sidebar">
+            <h4 class="grey">Sarah's activity</h4>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

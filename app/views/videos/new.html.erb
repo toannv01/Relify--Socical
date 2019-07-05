@@ -1,0 +1,24 @@
+<%= render 'form' %>
+<script>
+    $(document).ready(function(){
+
+        $("#btn-upload").click(function(e){
+        e.preventDefault();
+        var fd = new FormData();
+        var files = $('#video_video')[0].files[0];
+
+            fd.append('video', files);
+            $.ajax({
+                url: '/videos',
+                dataType: 'json',
+                type: 'post',
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function(vid){
+                    console.log(vid);
+                },
+            });
+        });
+    });
+</script>

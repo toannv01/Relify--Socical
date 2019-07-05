@@ -1,0 +1,10 @@
+<%= form_for @image, html: {multipart: true} do |f| %>
+<div class="tool">
+  <ul class="publishing-tools list-inline">
+  <%= f.fields_for :images do |p| %>
+    <%= p.file_field :image, multiple: true, name: "images[image][]", class: "post_image" %>
+  <% end %>
+    <%= f.button "Submit", class: "btn btn-primary pull-right", id: "btn-upload" %>
+  </ul>
+</div>
+<% end %>

@@ -1,0 +1,25 @@
+@import 'bootstrap';
+@import 'semantic-ui';
+@import 'posts.scss';
+
+
+#a{
+  margin-right: 100px;
+
+}
+.search{
+  margin-right: 30px;
+  margin-top: 4px;
+  
+}
+
+#form{
+  width: 500px;
+  margin: 10px auto;
+}
+.form-group-error {
+  color: red;
+}
+.error_input{
+  border-color: #C00000;
+}

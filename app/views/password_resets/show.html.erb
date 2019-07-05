@@ -1,0 +1,44 @@
+
+<div class="container" id="re">
+  <div class="ui form">
+    <div class="form-top">
+      <div class="form-top-left">
+        <h3>Lấy lại mật khẩu</h3>
+          <p>Nhập mật khẩu mới và xác nhận để thay đổi</p>
+      </div>
+      <div class="form-top-right">
+        <i class="lock icon"></i>
+      </div>
+    </div>
+    <div class="form-bottom">
+
+      <% if alert %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>
+          <%= form_for @user, :url => password_reset_path(params[:id]) do |f| %>
+            <% if @user.errors.any? %>
+              <div class="alert alert-danger">
+                  <% for messages in @user.errors.full_messages %>
+                  <%= messages %>
+                  <% end %>
+              </div>
+            <% end %>
+            <div class="form-group" data-tooltip="Email là duy nhất và đúng định dạng" data-position="right center">
+              <label class="sr-only" for="form-email">Password</label>
+              <%= f.label :Mật_khẩu_mới %>
+              <%= f.password_field :password ,class: " invalid form-control", placeholder: "Mật khẩu mới" , :maxlength => 32 ,:minlength => 6 %>
+            </div>
+            <div class="form-group" data-tooltip="Email là duy nhất và đúng định dạng" data-position="right center">
+              <label class="sr-only" for="form-email">Email</label>
+              <%= f.label :Nhập_lại_mật_khẩu_mới %>
+              <%= f.password_field :password_confirmation  ,class: " invalid form-control", placeholder: "Nhập lại mật khẩu mới", :maxlength => 32 ,:minlength => 6 %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit "Thay đổi mật khẩu" ,class: " btn btn-primary"%>
+            </div>
+          <% end %>
+      </div>
+
+    </div>
+    </div>

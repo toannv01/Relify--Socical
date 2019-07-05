@@ -1,0 +1,22 @@
+<div class="col-md-3">
+  <%= form_for @user do |f| %>
+
+          <div class="profile-info" style="text-align:center;">
+            <img src="http://placehold.it/300x300" alt="" class="img-responsive profile-photo" />
+            <h4><%= @user.first_name %> <%= @user.last_name %></h4>
+
+            <p class="text-muted"></p>
+          </div>
+        <!--Edit Profile Menu-->
+        <ul class="edit-menu">
+          <li><i class="icon newspaper"></i><a href="/timeline/<%= @user.id %>/">Bài Viết</a></li>
+          <li><i class="icon info"></i><a href="/users/<%= current_user.id %>/">Thông tin cá nhân</a></li>
+          <!-- <li><i class="icon heart"></i><a href="">My Interests</a></li> -->
+          <li class="active"><i class="icon settings"></i><a href="/users/<%= current_user.id %>/edit">Cài đặt tài khoản</a></li>
+          <li><i class="icon lock"></i><a href="">Đổi mật khẩu</a></li>
+          <li><i class="icon briefcase"></i><a href="">Học vấn và công việc</a></li>
+
+        </ul>
+
+  <% end %>
+</div>

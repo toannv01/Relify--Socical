@@ -1,0 +1,8 @@
+<%= form_for @video, html: {multipart: true} do |f| %>
+<div class="tool">
+  <ul class="publishing-tools list-inline">
+    <%= f.file_field :video, name: "video[]", class: "post_image" %>
+    <%= f.button "Submit", class: "btn btn-primary pull-right", id: "btn-upload" %>
+  </ul>
+</div>
+<% end %>

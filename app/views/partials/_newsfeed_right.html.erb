@@ -1,0 +1,17 @@
+
+  <div class="suggestions" id="sticky-sidebar">
+    <h4 class="grey">Thêm bạn bè</h4>
+    <% @users.shuffle.take(7).each do |user| %>
+        <% if current_user.not_friends_with?(user.id) %>
+          <div class="follow-user">
+            <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm pull-right-nf" />
+            <div>
+              <h6><a href="/users/<%= user.id %>"><%= user.first_name %> <%= user.last_name %></a></h6>
+                <i class="text-green icon plus"></i>
+                  <%= link_to "Kết bạn",  add_friend_path(user: current_user, friend: user), class: " text-green", method: :post %>
+            </div>
+          </div>
+        <% else %>
+        <% end %>
+      <% end %>
+  </div>

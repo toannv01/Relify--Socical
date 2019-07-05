@@ -1,0 +1,478 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body{
+    font-family: 'Lato', sans-serif;
+  line-height: 26px;
+    color: #6d6e71;
+    font-size: 13px;
+}
+
+
+/*==================================================
+  Typography
+  ==================================================*/
+
+@font-face {
+    font-family:"Agency FB";
+    src: url("../fonts/agency-fb.eot") /* EOT file for IE */
+}
+@font-face {
+    font-family:"Agency FB";
+    src: url("../fonts/agency-fb.ttf") /* TTF file for CSS3 browsers */
+}
+
+h1, h2, h3, h4, h5, h6{color: #27aae1;}
+
+h1.grey, h2.grey, h3.grey, h4.grey, h5.grey, h6.grey{
+  color: #6d6e71;
+  margin: 0 auto 20px;
+}
+
+.text-white{color: #fff;}
+
+.text-white:hover{color: #fff;}
+
+.text-green{color: #8dc63f;}
+
+.text-green:hover{color: #39b54a;}
+
+.text-red{color: #ef4136;}
+
+.text-red:hover{color: #d6100b;}
+
+.profile-link{font-weight: 600;}
+
+.text-muted{color: #939598;}
+
+a{color: #27aae1;}
+
+a:hover{color: #149AC9;}
+
+a, a:active, a:focus {outline: none;}
+
+section h1.section-title{
+    font-family: 'Agency FB', sans-serif;
+    font-size: 215px;
+    color: #E6E7E8;
+    margin-bottom: -55px;
+}
+
+section h2.sub-title{
+    font-family: 'Agency FB', sans-serif;
+    color: #E6E7E8;
+    font-size: 50px;
+    margin: 40px 0;
+}
+
+
+.option{
+  display: inline-block;
+  font-size: 15px;
+  margin-left: 350px;
+}
+
+select{
+  border-color: #6d6e71;
+}
+
+
+/*==================================================
+  Common
+  ==================================================*/
+
+.container{
+  max-width: 1050px;
+}
+
+section .wrapper{
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+#page-contents{
+  padding: 30px 0 50px;
+}
+
+.btn-primary{
+    background: #27aae1;
+    padding: 7px 25px;
+    border: none;
+    font-size: 14px;
+    border-radius: 4px;
+    color: #fff;
+    position: relative;
+  font-weight: 600;
+  outline: none;
+  border-radius: 30px;
+}
+
+.btn-primary:hover{
+  background: #149AC9;
+  transition: all 1s;
+}
+
+.btn-secondary{
+    background: linear-gradient(to bottom, rgba(109,110,113,1), rgba(0,0,0,1));
+    padding: 0 40px;
+    border: none;
+    min-height: 36px;
+    font-size: 18px;
+    border-radius: 6px;
+    color: #fff;
+    position: relative;
+  outline: none;
+}
+
+.btn-secondary:hover{
+    background: #000;
+  transition: all 1s;
+}
+
+section img{
+    margin: auto;
+}
+
+img.profile-photo{
+  height: 58px;
+  width: 58px;
+  border-radius: 50%;
+}
+
+img.profile-photo-lg{
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+}
+
+img.profile-photo-md{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin-bottom: -60px;
+}
+
+img.profile-photo-sm{
+    display: inline;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+img.profile-photo-xs{
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.img-wrapper{
+  position: relative;
+}
+
+.img-wrapper::after{
+  content: "";
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transition: all 1s ease 0s;
+}
+
+.img-wrapper:hover:after{
+  background-color: rgba(0,0,0, 0.4);
+}
+
+ul{
+  padding-left: 15px;
+}
+
+
+.line{
+  background: #f1f2f2;
+  height: 1px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.map{
+  width: 100%;
+  height: auto;
+  border: none;
+}
+
+.static{
+  position: static;
+}
+
+textarea{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.custom-label{
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 5px;
+}
+
+.form-control{
+  background: #fff;
+  border: 1px solid #f1f2f2;
+  box-shadow: none;
+  border-radius: 4px;
+  color: #939598;
+  width: 100% !important;
+}
+.create-post{
+  width: 100%;
+  min-height: 90px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f1f2f2;
+}
+
+.create-post .form-group{
+  margin-bottom: 0;
+  display: inline-flex;
+}
+
+.create-post .form-group .form-control{
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.create-post .form-group img.profile-photo-md{
+  margin-right: 10px;
+}
+
+.tool{
+  margin: 10px 0 0 50px;
+}
+
+.tool ul {
+    font-size: 40px;
+    li {
+      display: inline-block;
+    }
+}
+
+/*==================================================
+  Post Contents CSS
+  ==================================================*/
+
+.post-content{
+  background: #f8f8f8;
+  border-radius: 4px;
+  width: 100%;
+  border: 1px solid #f1f2f2;
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.post-content img.post-image, video.post-video, .google-maps{
+  width: 100%;
+  height: 100%;
+}
+
+.post-image{
+  display: inline-block;
+  font-size: 14px;
+  // margin-left: 8px;
+}
+
+.post-video{
+  font-size: 15px;
+  // margin-left: 8px;
+}
+.post-content .google-maps .map{
+  height: 300px;
+}
+
+.post-content .post-container{
+  padding: 20px;
+}
+
+.post-content .post-container .post-detail{
+  margin-left: 65px;
+  position: relative;
+}
+
+.post-content .post-container .post-detail .post-text{
+  line-height: 24px;
+  margin-bottom: 5px;
+}
+
+
+.post-content .post-container .post-detail .post-comment{
+  display: inline-flex;
+  margin: 10px auto;
+  width: 100%;
+}
+
+.post-content .post-container .post-detail .post-comment img.profile-photo-sm{
+  margin-right: 10px;
+}
+
+.post-content .post-container .post-detail .post-comment .form-control{
+  height: 30px;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  margin: 7px 0;
+  min-width: 0;
+}
+
+#post_image{
+  border: 0;
+  margin-top: 10px;
+}
+
+/*==================================================
+Newsfeed Right Sidebar
+==================================================*/
+
+.suggestions.affix{
+position:fixed !important;
+}
+
+.follow-user{
+margin-bottom: 20px;
+}
+
+.follow-user div{
+margin-left: 50px;
+position: relative;
+}
+
+.follow-user div::after{
+content: "";
+background: none;
+border-top: 1px solid #f1f2f2;
+position: absolute;
+width: 100%;
+left: 0;
+bottom: -10px;
+}
+
+
+/*Profile Card CSS*/
+
+.profile-card{
+background: linear-gradient(to bottom, rgba(39,170,225,.8), rgba(28,117,188,.8)), url("http://placehold.it/1030x430") no-repeat;
+background-size: cover;
+width: 100%;
+min-height: 90px;
+border-radius: 4px;
+padding: 10px 20px;
+color: #fff;
+margin-bottom: 40px;
+}
+
+.profile-card img.profile-photo{
+border: 7px solid #fff;
+float: left;
+margin-right: 20px;
+position: relative;
+top: -30px;
+height: 70px;
+width: 70px;
+border-radius: 50%;
+}
+
+#errors{
+margin-top: 3px;
+font-size: 15px;
+color: red;
+}
+
+#post_status {
+margin-top: 0px;
+margin-bottom: 0px;
+}
+
+button.btn{
+  margin: 0;
+  padding: 0 20px;
+  vertical-align: middle;
+  border: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 32px;
+  color: #fff;
+  text-shadow: none;
+  box-shadow: none;
+  transition: all .3s;
+}
+
+.image-post{
+max-width: 860px;
+max-height: 860px;
+}
+
+.save_comment{
+float: right;
+margin-top: 5px;
+height: 30px;
+padding: 0 20px;
+vertical-align: middle;
+background: blue;
+border: 0;
+font-family: 'Roboto', sans-serif;
+font-size: 16px;
+font-weight: 300;
+color: #fff;
+border-radius: 4px;
+text-shadow: none;
+box-shadow: none;
+transition: all .3s;
+}
+
+.comment-submit{
+  height: 30px;
+  margin: 0;
+  padding: 0 20px;
+  vertical-align: middle;
+  background: blue;
+  border: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: #fff;
+  border-radius: 4px;
+  text-shadow: none;
+  box-shadow: none;
+  transition: all .3s;
+  float: right;
+  margin-top:5px;
+}
+
+.pull-right{
+  display: inline-block!important;
+}
+
+#error{
+  font-size: 13px;
+  margin-left: 8px;
+  color: red;
+}
+
+.media .media-grid img.post-image, video {
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+}
+
+.media .media-grid img.post-image1, video {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}

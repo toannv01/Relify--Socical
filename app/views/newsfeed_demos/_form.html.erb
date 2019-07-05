@@ -1,0 +1,17 @@
+<%= form_with(model: newsfeed_demo, local: true) do |form| %>
+  <% if newsfeed_demo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(newsfeed_demo.errors.count, "error") %> prohibited this newsfeed_demo from being saved:</h2>
+
+      <ul>
+      <% newsfeed_demo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="timeline">
+    <div id="page-contents">
+      <div class="row">
+        <!-- Left content User infor  -->
+        <%= render "partials/left_content_user" %>
+        <!-- Content User infor  -->
+        <div class="col-md-7">
+          <!-- Basic Information
+          ================================================= -->
+          <%= form_for @user do |f| %>
+              <% if notice %>
+                <p class="alert alert-success"><%= notice %></p>
+              <% end %>
+              <% if alert %>
+                <p class="alert alert-danger"><%= alert %></p>
+              <% end %>
+            <div class="edit-profile-container">
+              <div class="edit-block">
+                <h4 class="grey" style="padding-top:10px;"><i class="icon user"></i>Thông tin cá nhân</h4>
+
+                  <div class="row" style="padding-top:15px;" >
+                    <div class="block-title">
+                      <h4 class="grey"><i class="icon info"></i>Giới thiệu</h4>
+                    </div>
+                  </div>
+                  <div class="row edit-about">
+                    <div class="col-md-10">
+                      <label for="my-info"><%= current_user.introduction %></label>
+                    </div>
+                    <div class="col-md-2">
+                      <a href="/users/<%= current_user.id %>/edit"><i class="pencil icon"></i>Sửa</a>
+                    </div>
+                    <div class="line-divider" style="color: #CCCCCC;"></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="block-title">
+                      <h4 class="grey"><i class="icon mail"></i>Liên hệ</h4>
+                    </div>
+                  </div>
+                  <div class="row edit-about">
+                    <div class="col-md-10">
+                      <label for="email">Email : <%= current_user.email %></label>
+                    </div>
+                    <div class="line-divider" ></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="block-title">
+                      <h4 class="grey"><i class="icon birthday"></i>Sinh nhật</h4>
+                    </div>
+                  </div>
+                  <div class="row edit-about">
+                    <div class="col-md-10">
+                      <label for="birth">Ngày sinh : <%= current_user.birth %></label>
+                    </div>
+                    <div class="col-md-2">
+                      <a href="/users/<%= current_user.id %>/edit"><i class="pencil icon"></i>Sửa</a>
+                    </div>
+                    <div class="col-md-10">
+                       <% if  @user.sex == 0 %>
+                         <span>Giới tính : Nam </span>
+                        <% else %>
+                         <span>Giới tính : Nữ </span>
+                       <% end %>
+                       <div class="line-divider" ></div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="block-title">
+                      <h4 class="grey"><i class="icon home"></i>Nơi sống</h4>
+                    </div>
+                  </div>
+                  <div class="row edit-about">
+                    <div class="col-md-10">
+                      <label for="city"> Thành phố : <%= current_user.city %></label>
+                    </div>
+                    <div class="col-md-2">
+                      <a href="/users/<%= current_user.id %>/edit"><i class="pencil icon"></i>Sửa</a>
+                    </div>
+                    <div class="col-md-10">
+                      <label for="city"> Quốc Gia : <%= current_user.country %></label>
+                      <div class="line-divider" ></div>
+                    </div>
+                    <div class="col-md-10">
+                      <!-- <label typr="date"> Ngày tham gia Relify : <%= time_ago_in_words(current_user.created_at) %> ago</label> -->
+                      <div class="line-divider" ></div>
+                    </div>
+                  </div>
+                <!-- </form> -->
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+        <!-- Right content User infor  -->
+        <%= render "partials/right_content_user" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+en:
+  users:
+    new:
+     firstName: "First Name"
+     lastName: "Last Name"
+     email: "Email"
+     yourEmail: "Your Email"
+     password: "Password"
+     passwordCon: "Password Confirm"
+     yourCity: "Your City"
+     yourCountry: "Your Country"
+     save: "Save"
+     sex: "Sex"
+     male: "Male"
+     female: "Female"

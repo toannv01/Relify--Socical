@@ -1,0 +1,27 @@
+<% if params[:action] == 'search' %>
+  <div class="results-block">
+    <%= bootstrap_flash %>
+  </div>
+<% end %>
+<% if @users %>
+  <div class="suggestions" id="sticky-sidebar">
+    <% @users.each do |user| %>
+      <div class="follow-user">
+        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm pull-right-nf" />
+        <div>
+          <h6><a href="#"><%= user.first_name %> <%= user.last_name %></a></h6>
+            <% if current_user.not_friends_with?(user.id) %>
+            <i class="text-green icon plus"></i>
+              <%= link_to "Kết bạn",add_friend_path(user: current_user, friend: user), class: " text-green", method: :post %>
+            <% else %>
+            <i class="icon check"></i>
+              <span class="">
+                Bạn bè
+              </span>
+            <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<% end %>

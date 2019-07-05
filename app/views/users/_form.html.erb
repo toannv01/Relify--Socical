@@ -1,0 +1,247 @@
+<script>
+(function() {
+  const customMessages = {
+    valueMissing:    'Custom required!',       // `required` attr
+    emailMismatch:   'Custom email mismatch',  // Invalid email
+    patternMismatch: 'Custom pattern mismatch',// `pattern` attr
+  }
+
+  function getCustomMessage (type, validity) {
+    if (validity.typeMismatch) {
+      return customMessages[`${type}Mismatch`]
+    } else {
+      for (const invalidKey in customMessages) {
+        if (validity[invalidKey]) {
+          return customMessages[invalidKey]
+        }
+      }
+    }
+  }
+
+  var inputs = document.querySelectorAll('input, select, textarea')
+  inputs.forEach(function (input) {
+    // Each time the user types or submits, this will
+    // check validity, and set a custom message if invalid.
+    function checkValidity () {
+      const message = input.validity.valid
+        ? null
+        : getCustomMessage(input.type, input.validity, customMessages)
+      input.setCustomValidity(message || '')
+    }
+    input.addEventListener('input', checkValidity)
+    input.addEventListener('invalid', checkValidity)
+  })
+});
+  $(function(){
+    getRestration();
+
+  });
+
+  function IsEmail(email) {
+    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if(!regex.test(email)) {
+      return false;
+    }else{
+      return true;
+    }
+  };
+function IsLetters(name){
+    var letters = /^[a-z][a-z\s]*$/i;
+
+    if(!letters.test(name)){
+      return false;
+    }else{
+      return true;
+    }
+  };
+
+  function getRestration(){
+    $('.error').hide();
+    $("#message").hide();
+  $("#create-submit").click(function(e){
+     e.preventDefault();
+
+     var first_name = $(".first_name").val();
+     var last_name = $(".last_name").val();
+     var email = $(".email").val();
+     var password = $(".password").val();
+     var password_confirmation = $(".password_confirmation").val();
+     var birth = $(".birth").val();
+     var sex = $(".sex:checked").val();
+
+     var isError = false;
+
+    if(first_name.length == 0 || first_name.length > 32){
+
+          $('.first_name').css({"border-color":"red"});
+          isError = true;
+        }else{
+          $(".first_name").blur(function(){
+             $('.first_name').css({"border-color":""});
+          })
+
+        }
+
+      if(last_name.length == 0 || last_name.length > 32) {
+          $('.last_name').css({"border-color":"red"});
+          isError = true;
+        }else{
+           $('.last_name').css({"border-color":""});
+        }
+
+      if(IsLetters(first_name)==false){
+         $('.first_name').css({"border-color":"red"});
+        isError = false;
+      }else{
+        $('.first_name').css({"border-color":""});
+      }
+
+      if(IsLetters(last_name)== false){
+         $('.last_name').css({"border-color":"red"});
+        isError = false;
+      }else{
+         $('.last_name').css({"border-color":""});
+      }
+
+     if(email== '' || IsEmail(email)==false){
+          $('.email').css({"border-color":"red"});
+          isError = true;
+        }else{
+           $('.email').css({"border-color":""});
+        }
+
+      if(password.length < 6 || password.length > 32){
+         $('.password').css({"border-color":"red"});
+         isError = true;
+      }
+      else{
+         $('.password').css({"border-color":""});
+      }
+      if(password != password_confirmation){
+        $('.password_confirmation').css({"border-color":"red"});
+        isError = true;
+      }else{
+         $('.password_confirmation').css({"border-color":""});
+      }
+      if(birth == ""){
+         $('.birth').css({"border-color":"red"});
+         isError = true;
+      }else{
+         $('.birth').css({"border-color":""});
+      }
+
+    if (isError) return;
+
+
+    $.ajax({
+       type: "post",
+       url: "/registration",
+       dataType: "json",
+       headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Optional
+        'Content-Type': 'application/json'
+       },
+       data: JSON.stringify({
+         first_name: first_name,
+         last_name: last_name,
+         email: email,
+         password: password,
+         password_confirmation: password_confirmation,
+         birth: birth,
+         sex: sex
+       }),
+       success: function(datas, status){
+         $("#message").show();
+       },
+        error:  function(error){
+
+          var response = error.responseJSON;
+
+
+
+        }
+
+     });
+     e.preventDefault();
+  });
+
+};
+
+</script>
+
+<div class="container"id="re">
+    <!-- <div class="row">
+        <div class="col-sm-12 col-sm-offset-2 text" style="text-align: center;" >
+            <h1><strong style="color: #2990C3;">Relify</strong> Login &amp; Register Forms</h1>
+            <div class="description">
+              <p>
+                Top social networking community in Vietnam - It's free and will always be.
+              </p>
+            </div>
+        </div>
+    </div> -->
+      <!-- Begin Register --->
+            <div class="form-top">
+              <div class="form-top-left">
+                <h3>Đăng kí</h3>
+                  <p>Nhập đầy đủ thông tin để có thể đăng kí tài khoản</p>
+              </div>
+              <div class="form-top-right">
+                <i class="pencil icon"></i>
+              </div>
+          </div>
+          <div class="form-bottom">
+            <form>
+              <div class="form-group" data-tooltip="Tên không được để trống hoặc dài quá 32 kí tự" data-position="left center">
+                <label class="sr-only" for="form-first-name">First name</label>
+                  <input type="text" class="first_name form-first-name form-control" id="first_name form-first-name" placeholder="Tên..." />
+              </div>
+              <div class="form-group" data-tooltip="Họ và Tên đệm không được để trống hoặc dài quá 32 kí tự" data-position="left center">
+                <label class="sr-only" for="form-last-name">Last name</label>
+                <input type="text" class="last_name form-last-name form-control" id="last_name form-last-name" placeholder="Họ & Tên đệm..."/>
+              </div>
+              <div class="form-group" data-tooltip="Email là duy nhất và đúng định dạng" data-position="left center">
+                <label class="sr-only" for="form-email">Email</label>
+                <input type="email" class="email form-email form-control" id="email form-email" placeholder="Email">
+                <p id="errorse" class="errorse"></p>
+              </div>
+              <div class="form-group" data-tooltip="Mật khẩu dài từ 6 - 32 kí tự " data-position="left center">
+                <label class="sr-only" for="form-password">Password</label>
+                 <input type="password" class="password form-password form-control" id="password form-password" placeholder="Mật khẩu">
+              </div>
+              <div class="form-group" data-tooltip="Xác nhận mật khẩu" data-position="left center">
+                <label class="sr-only" for="form-password-confirm">Password Confirm</label>
+                <input type="password" class="password_confirmation form-password-confirm form-control" id="password_confirmation form-password-confirm" placeholder="Nhập lại mật khẩu" >
+              </div>
+              <div class="form-group" data-tooltip="Sinh nhật không được để trống" data-position="left center">
+                <label class="sr-only" for="form-birth">Birth</label>
+                 <input type="date" class="birth form-birth form-control" id="birth form-birth">
+              </div>
+              <div class="form-group" style="padding-left: 10px;">
+                <label for="fruit">Giới tính</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                      <input type="radio" name="sex" checked="" value="0" class="hidden sex">
+                      <label>Nam</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <div class="ui radio checkbox">
+                    <input type="radio" name="sex" value="1" class="hidden sex">
+                    <label>Nữ</label>
+                  </div>
+                </div>
+              </div>
+
+              <p id="message" class=" alert alert-success ">Đăng kí thành</p>
+              <div class="inline field">
+              </div>
+              <button type="submit" id="create-submit" class="btn btn-primary">Đăng kí</button>
+              <%= link_to 'Trang đăng nhập',  login_path %><br>
+
+            </form>
+          </div>
+
+      <!-- End Register --->
+
+</div>
