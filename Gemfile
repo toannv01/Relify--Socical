@@ -6,7 +6,7 @@ ruby '2.5.1'
 ruby "2.5.1"
 
 gem "rails", "~> 5.2.1"
-gem "puma", "~> 3.11"
+gem "puma", "~> 5.5"
 gem "bootstrap"
 gem "bootstrap4-kaminari-views"
 gem "kaminari"
@@ -39,7 +39,7 @@ gem 'jwt'
 gem 'kaminari'
 gem 'mini_magick'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 5.5'
 gem 'rails', '~> 5.2.1'
 gem 'rails-i18n'
 gem 'sass-rails', '~> 5.0'
